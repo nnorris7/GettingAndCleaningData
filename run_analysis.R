@@ -1,35 +1,51 @@
-## You should create one R script called run_analysis.R that does the following. 
-## Merges the training and the test sets to create one data set.
-fullSubjects <- rbind(read.table("./subject_test.txt"), read.table("./subject_train.txt"))
+# You should create one R script called run_analysis.R that does the following. 
+# Merges the training and the test sets to create one data set.
+subj_test <- fread("./subject_test.txt")
+subj_train <- fread("./subject_train.txt")
+full_subj <- bind_rows(subj_test, subj_train)
+rm("subj_test", "subj_train")
 
-fullActivities <- rbind(read.table("./y_test.txt"), read.table("./y_train.txt"))
+y_test <- fread("./y_test.txt")
+y_train <- fread("./y_train.txt")
+full_act <- bind_rows(y_test, y_train)
+rm("y_test", "y_train")
 
-fullData <- rbind(read.table("./X_test.txt"), read.table("./X_train.txt"))
+x_test <- read.table("./X_test.txt")
+x_train <- read.table("./X_train.txt")
+full_obs <- bind_rows(tbl_df(x_test), tbl_df(x_train))
+rm("x_test", "x_train")
 
 ## Uses descriptive activity names to name the activities in the data set
-activity_labels <- read.table("./activity_labels.txt", stringsAsFactors = FALSE)
+activity_labels <- fread("./activity_labels.txt")
+ 
+setnames(full_act, "activityCode")
+setnames(activity_labels, c("activityCode", "activityName"))
 
-names(fullActivities) <- "code"
-names(activity_labels) <- c("code", "activity")
+full_act$activityCode <- as.numeric(full_act$activityCode)
+activity_labels$activityCode <- as.numeric(activity_labels$activityCode)
 
-fullActivities <- merge(fullActivities, activity_labels, by = "code", all = TRUE)
-fullActivities$code <- NULL
+full_act <- inner_join(full_act, activity_labels)
+full_act <- select(full_act, -activityCode)
 
 ## Appropriately labels the data set with descriptive variable names. 
+setnames(full_subj, "subject")
+
 features <- read.table("./features.txt", stringsAsFactors = FALSE)
 features <- features[, 2]
 
-names(fullData) <- features
-names(fullSubjects) <- "subject"
+setnames(full_obs, features)
 
-## Extracts only the measurements on the mean and standard deviation for each measurement. 
+## Extracts only the measurements on the mean and standard deviation for each measurement.
 colsToKeep <- c(grep("mean()", features, fixed = TRUE), grep("std()", features, fixed = TRUE))
+full_obs <- full_obs[, colsToKeep]
 
-df <- cbind(fullSubjects, fullActivities, fullData[, colsToKeep])
+full_data <- bind_cols(full_subj, full_act, full_obs)
 
 rm(features, colsToKeep)
-rm("fullSubjects", "fullActivities", "fullData", "activity_labels")
+rm("full_subj", "full_act", "full_obs", "activity_labels")
 
 ## From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-#by_activity <- group_by(df, subject, activity)
-#act_sum <- summarize_each(by_activity)
+groupby_subj_act <- group_by(full_data, subject, activityName)
+tidy <- summarise_each(groupby_subj_act, funs(mean))
+
+write.table(tidy, "./tidy_data.txt", row.name = FALSE)
