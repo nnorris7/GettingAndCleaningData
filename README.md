@@ -6,6 +6,7 @@ This README outlines all of the files contained in this repository. You will nee
 ## Table of Contents
 
 * [**File Listing**](#file-listing)
+* [**Description of Files**](#description-of-files)
 * [**Usage**](#usage)
 * [**Considerations**](#considerations)
 
@@ -35,6 +36,33 @@ The second directory, tidy_data_file, contains the tidy data set text file we we
 
 * <code>repo/tidy_data_file/</code>
 	* <code>tidy_data.txt</code>
+
+
+## Description of Files
+
+* <code>repo/</code>
+	* <code>CodeBook.md</code> - a code book that describes the variables, the data, and any transformations or work  performed to clean up the data
+
+	* <code>README.md</code>
+- this file, which explains how all of the scripts work and are connected in this repo
+
+	* <code>run_analysis.R</code>
+
+
+* <code>repo/raw_data_files/</code>
+	* <code>activity_labels.txt</code>
+	* <code>features.txt</code>
+	* <code>subject_test.txt</code>
+	* <code>subject_train.txt</code>
+	* <code>X_test.txt</code>
+	* <code>X_train.txt</code>
+	* <code>y_test.txt</code>
+	* <code>y_train.txt</code>
+
+	* <code>tidy_data.txt</code>
+
+
+
 
 
 ## Usage
