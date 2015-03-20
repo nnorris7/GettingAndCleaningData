@@ -1,22 +1,22 @@
 # You should create one R script called run_analysis.R that does the following. 
 # Merges the training and the test sets to create one data set.
-subj_test <- fread("./subject_test.txt")
-subj_train <- fread("./subject_train.txt")
+subj_test <- fread("./raw_data_files/subject_test.txt")
+subj_train <- fread("./raw_data_files/subject_train.txt")
 full_subj <- bind_rows(subj_test, subj_train)
 rm("subj_test", "subj_train")
 
-y_test <- fread("./y_test.txt")
-y_train <- fread("./y_train.txt")
+y_test <- fread("./raw_data_files/y_test.txt")
+y_train <- fread("./raw_data_files/y_train.txt")
 full_act <- bind_rows(y_test, y_train)
 rm("y_test", "y_train")
 
-x_test <- read.table("./X_test.txt")
-x_train <- read.table("./X_train.txt")
+x_test <- read.table("./raw_data_files/X_test.txt")
+x_train <- read.table("./raw_data_files/X_train.txt")
 full_obs <- bind_rows(tbl_df(x_test), tbl_df(x_train))
 rm("x_test", "x_train")
 
 ## Uses descriptive activity names to name the activities in the data set
-activity_labels <- fread("./activity_labels.txt")
+activity_labels <- fread("./raw_data_files/activity_labels.txt")
  
 setnames(full_act, "activityCode")
 setnames(activity_labels, c("activityCode", "activityName"))
@@ -30,7 +30,7 @@ full_act <- select(full_act, -activityCode)
 ## Appropriately labels the data set with descriptive variable names. 
 setnames(full_subj, "subject")
 
-features <- read.table("./features.txt", stringsAsFactors = FALSE)
+features <- read.table("./raw_data_files/features.txt", stringsAsFactors = FALSE)
 features <- features[, 2]
 
 setnames(full_obs, features)
@@ -48,4 +48,4 @@ rm("full_subj", "full_act", "full_obs", "activity_labels")
 groupby_subj_act <- group_by(full_data, subject, activityName)
 tidy <- summarise_each(groupby_subj_act, funs(mean))
 
-write.table(tidy, "./tidy_data.txt", row.name = FALSE)
+write.table(tidy, "./tidy_data_file/tidy_data.txt", row.name = FALSE)
