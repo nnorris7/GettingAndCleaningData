@@ -15,14 +15,14 @@ This README outlines all of the files contained in this repository. You will nee
 
 This repository contains 3 files at the root level:
 
-* <code>repo/</code>
+* <code>GettingAndCleaningData-master/</code>
 	* <code>CodeBook.md</code>
 	* <code>README.md</code>
 	* <code>run_analysis.R</code>
 
 It also contains 2 directories. The first directory, raw_data_files, contains the raw data files provided in the UCI HAR Dataset:
 
-* <code>repo/raw_data_files/</code>
+* <code>GettingAndCleaningData-master/raw_data_files/</code>
 	* <code>activity_labels.txt</code>
 	* <code>features.txt</code>
 	* <code>subject_test.txt</code>
@@ -34,22 +34,21 @@ It also contains 2 directories. The first directory, raw_data_files, contains th
 
 The second directory, tidy_data_file, contains the tidy data set text file we were required to produce.
 
-* <code>repo/tidy_data_file/</code>
+* <code>GettingAndCleaningData-master/tidy_data_file/</code>
 	* <code>tidy_data.txt</code>
 
 
 ## Description of Files
 
-* <code>repo/</code>
+* <code>GettingAndCleaningData-master/</code>
 	* <code>CodeBook.md</code> - a code book that describes the variables, the data, and any transformations or work  performed to clean up the data
 
-	* <code>README.md</code>
-- this file, which explains how all of the scripts work and are connected in this repo
+	* <code>README.md</code> - this file, which explains how all of the scripts work and are connected in this repo
 
-	* <code>run_analysis.R</code>
+	* <code>run_analysis.R</code> - the R script containing the code to produce the tidy data set, given the raw data  files
 
 
-* <code>repo/raw_data_files/</code>
+* <code>GettingAndCleaningData-master/raw_data_files/</code>
 	* <code>activity_labels.txt</code>
 	* <code>features.txt</code>
 	* <code>subject_test.txt</code>
@@ -59,6 +58,7 @@ The second directory, tidy_data_file, contains the tidy data set text file we we
 	* <code>y_test.txt</code>
 	* <code>y_train.txt</code>
 
+* <code>GettingAndCleaningData-master/tidy_data_file/</code>
 	* <code>tidy_data.txt</code>
 
 
@@ -74,13 +74,26 @@ In order to use these files to recreate the tidy data set, follow the instructio
 3.	Unzip the file, if required. This will recreate the folder structure listed above.
 4.	In R, set your working directory to the "repo" folder.
 6.	The run_analysis.R script requires the following packages to be loaded:
-	a.	data.table
-	b.	dplyr
+	* <code>data.table</code>
+	* <code>dplyr</code>
 7.	Sourcing the run_analysis.R file will cause the script to run and the tidy data set file to be (re)created. Note, the script overwrites the tidy data set file each time. The script takes approximately 30s to run (depending on your hardware).
 8.	The tidy data set is stored in a variable called "tidy", which you can explore in R, or by loading the tidy_data.txt file into a text editor.
 
 
 ## Considerations
 
-The run_analysis.R script cleans up after itself in each block of code, therefore it should not take more than 60MB of memory to run.
+The run_analysis.R script contains ample comments throughout that explain what each section of the script does. Here is a summary of those comments:
+
+```r
+## This R script called run_analysis.R peforms the following tasks:
+## 1. Reads the raw data files and merges them into one data set,
+## 2. Replaces the activity codes with the activity names,
+## 3. Uses the "features.txt" file to appropriately label the columns/variables,
+## 4. Extracts only the mean and std variables from the larger data set,
+## 5. Groups the data by subject and activity and then calculates the mean for each
+##	  mean/std column/variable,
+## 6. Writes out the "tidy" data to a text file.
+```
+
+The script cleans up after itself in each block of code, therefore it should not take more than 60MB of memory to run.
 
