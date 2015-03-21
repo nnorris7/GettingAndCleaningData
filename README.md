@@ -17,13 +17,13 @@ This README outlines all of the files contained in this repository. You will nee
 
 * <code>GettingAndCleaningData-master/</code>
 	* <code>CodeBook.md</code>
-		- A code book that describes the variables, the data, and any transformations or work  performed to clean up the data
+		- A code book that describes the variables, the data, and any transformations or work performed to clean up the data
 
 	* <code>README.md</code>
-		- This file, which explains how all of the scripts work and are connected in this repo
+		- This file, which explains how all of the scripts work and are connected in this repository
 
 	* <code>run_analysis.R</code>
-		- The R script containing the code to produce the tidy data set, given the raw data  files
+		- The R script containing the code to produce the tidy data set, given the raw data files
 
 ####It also contains 2 directories. The first directory, raw\_data\_files, contains the raw data files provided in the UCI HAR Dataset:
 
