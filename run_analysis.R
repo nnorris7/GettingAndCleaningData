@@ -1,4 +1,4 @@
-## This R script called run_analysis.R peforms the following tasks:
+## This R script called run_analysis.R performs the following tasks:
 ## 1. Reads the raw data files and merges them into one data set,
 ## 2. Replaces the activity codes with the activity names,
 ## 3. Uses the "features.txt" file to appropriately label the columns/variables,
